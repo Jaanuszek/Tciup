@@ -1,0 +1,39 @@
+module demux4(input x, output [3:0] y, input [1:0]sel);
+  
+  assign y[0]=(~sel[1]&~sel[0]&x);
+  assign y[1]=(~sel[1]&sel[0]&x);
+  assign y[2]=(sel[1]&~sel[0]&x);
+  assign y[3]=(sel[1]&sel[0]&x);
+  
+  
+endmodule
+  
+// Code your testbench here
+// or browse Examples
+
+module demux4_tb();
+
+reg [1:0] sel;
+  reg [3:0] y;
+reg x;
+  
+demux4 UUT(x,y,sel);
+
+initial begin
+  
+  sel[0]=0;
+  sel[1]=1;
+  x=1'b0;
+  #10 x=1'b1;
+  sel[0]=1;
+  sel[1]=0;
+end
+   // ten begin tylko w przypadku playground online
+   initial begin
+    $dumpfile("t.vcd");
+    $dumpvars(1);
+    #300
+    $finish;
+  end
+  
+endmodule

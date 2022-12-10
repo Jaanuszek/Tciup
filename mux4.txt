@@ -1,0 +1,36 @@
+module mux4(input [3:0]x, output y, input [1:0]sel);
+  
+  assign y=(x[0]& ~sel[1] & ~sel[0] | x[1]& ~sel[1] & sel[0] | x[2]& sel[1] & ~sel[0] | x[0]& sel[1] & sel[0] );
+endmodule
+
+
+module mux4_tb();
+
+reg [1:0] sel;
+reg [3:0] x;
+wire y;
+  
+  mux4 UUT(x,y,sel);
+
+initial begin
+  
+  sel[0]=0;
+  sel[1]=1;
+  x=4'b0001;
+  #10 x=4'b0010;
+  sel[0]=1;
+  sel[1]=0;
+  #10 x=4'b0110;
+  sel[0]=0;
+  sel[1]=1;
+  #10 x=4'b0100;
+end
+   // ten begin tylko w przypadku playground online
+   initial begin
+    $dumpfile("t.vcd");
+    $dumpvars(1);
+    #300
+    $finish;
+  end
+  
+endmodule
